@@ -1,0 +1,124 @@
+version: '3'
+services:
+    todolist-api-nginx:
+        build:
+            context: docker
+            dockerfile: development/nginx/Dockerfile
+        restart: always
+        volumes:
+            - .:/app
+        networks:
+            - traefik-public
+            - laravel
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.http.routers.laravel-api.rule=Host(`laravel-api.localhost`)
+            - traefik.http.routers.laravel-api.entryPoints=http
+
+    todolist-api-php-fpm:
+        build:
+            context: docker
+            dockerfile: development/php-fpm/Dockerfile
+        restart: always
+        networks:
+            - laravel
+        environment:
+            APP_ENV: ${APP_ENV}
+            APP_DEBUG: ${APP_DEBUG}
+            DB_HOST: ${DB_HOST}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_DATABASE: ${DB_DATABASE}
+            MAIL_HOST: ${MAIL_HOST}
+            MAIL_PORT: ${MAIL_PORT}
+            MAIL_USERNAME: ${MAIL_USERNAME}
+            MAIL_PASSWORD: ${MAIL_PASSWORD}
+            MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+            MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PORT: ${REDIS_PORT}
+            REDIS_USERNAME: ${REDIS_USERNAME}
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+        volumes:
+            - .:/app
+
+    todolist-api-php-cli:
+        build:
+            context: docker
+            dockerfile: development/php-cli/Dockerfile
+        networks:
+            - laravel
+        environment:
+            APP_ENV: ${APP_ENV}
+            APP_DEBUG: ${APP_DEBUG}
+            DB_HOST: ${DB_HOST}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_DATABASE: ${DB_DATABASE}
+            MAIL_HOST: ${MAIL_HOST}
+            MAIL_PORT: ${MAIL_PORT}
+            MAIL_USERNAME: ${MAIL_USERNAME}
+            MAIL_PASSWORD: ${MAIL_PASSWORD}
+            MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+            MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PORT: ${REDIS_PORT}
+            REDIS_USERNAME: ${REDIS_USERNAME}
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+        volumes:
+            - .:/app
+
+    todolist-api-mysql:
+        image: mysql/mysql-server:8.0
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - db-data:/var/lib/mysql
+        networks:
+            - traefik-public
+            - laravel
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
+
+    todolist-api-redis:
+        image: redis:alpine
+        restart: always
+        command: redis-server --requirepass ${REDIS_PASSWORD}
+        volumes:
+            - redis-data:/data
+        networks:
+            - traefik-public
+            - laravel
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            retries: 3
+            timeout: 5s
+
+    todolist-api-mailer:
+        image: mailhog/mailhog:latest
+        restart: always
+        networks:
+            - traefik-public
+            - laravel
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.http.routers.todolist-api-mailer.rule=Host(`todolist-api-mailer.localhost`)
+            - traefik.http.routers.todolist-api-mailer.entryPoints=http
+            - traefik.http.services.todolist-api-mailer.loadBalancer.server.port=8025
+
+networks:
+    traefik-public:
+        external: true
+    laravel:
+
+volumes:
+    db-data:
+    redis-data:
