@@ -1,5 +1,5 @@
 init: docker-down-clear api-clear docker-pull docker-build docker-up api-init
-api-init: api-permissions api-composer-install api-wait-db api-migrations
+api-init: api-permissions api-composer-install api-wait-db api-migrations api-fixtures
 up: docker-up
 down: docker-down
 restart: down up
@@ -37,6 +37,18 @@ api-wait-db:
 api-migrations:
 	docker-compose run --rm todolist-api-php-cli composer artisan migrate -- --force
 
+api-migrations-rollback:
+	docker-compose run --rm todolist-api-php-cli composer artisan migrate:rollback
+
+api-new-migration:
+	docker-compose run --rm todolist-api-php-cli composer artisan make:migration $(p)
+
 api-generate-app-key:
-    docker-compose run --rm todolist-api-php-cli composer artisan key:generate
+	docker-compose run --rm todolist-api-php-cli composer artisan key:generate
+
+api-test:
+	docker-compose run --rm todolist-api-php-cli composer test
+
+api-fixtures:
+	docker-compose run --rm todolist-api-php-cli composer artisan db:seed
 
