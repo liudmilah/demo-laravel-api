@@ -8,36 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\CreateBoardRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use OpenApi\Annotations as OA;
-
-//#[OA\Post(
-//    path: '/api/v1/board',
-//    parameters: [
-//        new OA\Parameter(parameter: 'string', name: 'name'),
-//    ],
-//    responses: [
-//        new OA\Response(
-//            response: '201',
-//            description: 'Success',
-//            content: new OA\JsonContent(
-//                properties: [
-//                    new OA\Property(property: 'string', name: 'id')
-//                ]
-//            )
-//        ),
-//        new OA\Response(
-//            response: '422',
-//            description: 'Validation error',
-//            content: new OA\JsonContent(
-//                properties: [
-//                    new OA\Property(property: 'string', name: 'message'),
-//                    new OA\Property(property: 'array', name: 'errors'),
-//                ]
-//            )
-//        ),
-//    ]
-//)]
 
 /**
  * @OA\Post(
@@ -74,13 +44,11 @@ class CreateBoard extends Controller
 {
     public function __invoke(CreateBoardRequest $request, Handler $handler, Response $response): JsonResponse
     {
-        $request->validate([
-            'name' => 'bail|required|max:100', // todo unique
-        ]);
+        $validated = $request->validated();
 
         $user = \App\Domain\User\User::all()->first();
 
-        $command = new Command($request->input('name'), $user);
+        $command = new Command($validated['name'], $user);
 
         $boardId = $handler->handle($command);
 

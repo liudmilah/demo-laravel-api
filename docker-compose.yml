@@ -115,6 +115,24 @@ services:
             - traefik.http.routers.todolist-api-mailer.entryPoints=http
             - traefik.http.services.todolist-api-mailer.loadBalancer.server.port=8025
 
+    todolist-api-queue:
+        build:
+            context: docker
+            dockerfile: development/php-cli/Dockerfile
+        command: ["/usr/local/bin/php", "/app/artisan", "queue:work"]
+        restart: always
+        volumes:
+            - .:/app
+        healthcheck:
+            test: [ "CMD-SHELL", "ps -ef || exit 1" ]
+            interval: 10s
+            timeout: 30s
+            retries: 3
+        depends_on:
+            - todolist-api-redis
+        networks:
+            - laravel
+
 networks:
     traefik-public:
         external: true

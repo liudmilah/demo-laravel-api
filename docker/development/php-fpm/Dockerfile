@@ -2,10 +2,12 @@ FROM php:8.1-fpm-alpine
 
 ENV XDEBUG_VERSION 3.1.2
 
-RUN apk add --no-cache fcgi git \
+RUN apk add --no-cache fcgi git pcre-dev $PHPIZE_DEPS \
     && git clone --branch $XDEBUG_VERSION --depth 1 https://github.com/xdebug/xdebug.git /usr/src/php/ext/xdebug \
     && docker-php-ext-configure xdebug --enable-xdebug-dev \
     && docker-php-ext-install mysqli pdo pdo_mysql xdebug \
+    && pecl install redis \
+    && docker-php-ext-enable redis.so \
     && apk del git
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini

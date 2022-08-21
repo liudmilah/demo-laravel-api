@@ -18,13 +18,13 @@ final class CreateBoardRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return false; // todo change
+        return true; // todo change
     }
 
     public function rules(): array
     {
         return [
-            'bail|required|max:100', // todo unique
+            'name' => 'bail|required|max:100', // todo unique
         ];
     }
 }

@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('boards.{boardId}', function ($user, $boardId, \App\Domain\Board\BoardRepository $boards) {
+    /**
+     * @var \App\Domain\Board\Board $board
+     */
+    $board = $boards->findOneById($boardId);
+
+    return $board && $user->id === $board->user->id->getValue();
 });

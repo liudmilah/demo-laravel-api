@@ -9,7 +9,6 @@ final class BoardCreatedListener
 {
     public function handle(BoardCreated $event): void
     {
-        $board = $event->board;
-        // todo broadcast
+
     }
 }

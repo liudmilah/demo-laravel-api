@@ -25,13 +25,10 @@ abstract class BaseRepository
         return (bool) $entity->delete();
     }
 
-    public function findOneByUuid(string $uuid): BaseModel
+    public function findOneById(string $id): BaseModel
     {
-        /**
-         * @var class-string $className
-         */
         $className = static::$modelClass;
 
-        return $className::find($uuid);
+        return $className::find($id);
     }
 }

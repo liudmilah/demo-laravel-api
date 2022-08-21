@@ -54,4 +54,3 @@ api-fixtures:
 
 api-doc:
 	docker-compose run --rm todolist-api-php-cli composer artisan api:doc
-
