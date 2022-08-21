@@ -1,6 +1,12 @@
 FROM php:8.1-cli-alpine
 
-RUN apk add --no-cache bash coreutils unzip && docker-php-ext-install mysqli pdo pdo_mysql
+ENV XDEBUG_VERSION 3.1.3
+
+RUN apk add --no-cache bash coreutils git unzip \
+    && git clone --branch $XDEBUG_VERSION --depth 1 https://github.com/xdebug/xdebug.git /usr/src/php/ext/xdebug \
+    && docker-php-ext-configure xdebug --enable-xdebug-dev \
+    && docker-php-ext-install mysqli pdo pdo_mysql xdebug \
+    && apk del git
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 

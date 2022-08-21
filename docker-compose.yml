@@ -40,6 +40,7 @@ services:
             REDIS_PORT: ${REDIS_PORT}
             REDIS_USERNAME: ${REDIS_USERNAME}
             REDIS_PASSWORD: ${REDIS_PASSWORD}
+            PHP_IDE_CONFIG: serverName=TODOLIST
         volumes:
             - .:/app
 
