@@ -1,5 +1,5 @@
 init: docker-down-clear api-clear docker-pull docker-build docker-up api-init
-api-init: api-permissions api-composer-install api-wait-db api-migrations api-fixtures
+api-init: api-permissions api-composer-install api-wait-db api-migrations api-fixtures api-doc
 up: docker-up
 down: docker-down
 restart: down up
@@ -51,4 +51,7 @@ api-test:
 
 api-fixtures:
 	docker-compose run --rm todolist-api-php-cli composer artisan db:seed
+
+api-doc:
+	docker-compose run --rm todolist-api-php-cli composer artisan api:doc
 

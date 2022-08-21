@@ -1,0 +1,89 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Todo List Api",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/v1/board": {
+            "post": {
+                "tags": [
+                    "Board"
+                ],
+                "summary": "Adds a new board",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/CreateBoardRequest"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "201": {
+                                        "summary": "Success example",
+                                        "value": {
+                                            "id": "123e4567-e89b-12d3-a456-426614174000"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {}
+                                    },
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "422": {
+                                        "summary": "Validation error example",
+                                        "value": {
+                                            "message": "Invalid board name",
+                                            "errors": "one"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "requestBodies": {
+            "CreateBoardRequest": {
+                "description": "Create board",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
