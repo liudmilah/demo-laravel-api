@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('id', 36);
             $table->primary('id');
-            $table->string('name', 100);
-            $table->string('email', 100)->unique();
-            $table->string('password_hash', 100);
+            $table->string('status', 10)->nullable(false);
+            $table->string('name', 100)->nullable(false);
+            $table->string('email', 100)->unique()->nullable(false);
+            $table->string('password_hash', 100)->nullable(false);
+            $table->timestamp('email_verified_at')->nullable(true);
             $table->timestamps();
         });
     }

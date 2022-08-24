@@ -16,11 +16,6 @@ class BaseModel extends Model
     use HasFactory;
 
     /**
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * @var bool
      */
     public $incrementing = false;

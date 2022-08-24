@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Domain\Board\Events\BoardCreated;
 use App\Domain\Board\Listeners\BoardCreatedListener;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Domain\User\Events\UserRegistered;
+use App\Domain\User\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
+        UserRegistered::class => [
             SendEmailVerificationNotification::class,
         ],
         BoardCreated::class => [

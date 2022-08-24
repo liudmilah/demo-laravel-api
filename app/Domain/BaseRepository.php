@@ -25,7 +25,7 @@ abstract class BaseRepository
         return (bool) $entity->delete();
     }
 
-    public function findOneById(string $id): BaseModel
+    public function findOneById(Id $id): ?BaseModel
     {
         $className = static::$modelClass;
 

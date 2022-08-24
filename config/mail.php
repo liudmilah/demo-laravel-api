@@ -29,6 +29,10 @@ return [
                 'log',
             ],
         ],
+
+        'array' => [
+            'transport' => 'array',
+        ],
     ],
 
     'from' => [

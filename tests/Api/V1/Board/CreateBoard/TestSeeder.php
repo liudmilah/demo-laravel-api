@@ -1,17 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace Tests\Api\V1\Board\CreateBoard;
 
-use Illuminate\Database\Seeder;
 use App\Domain\User\User;
+use Illuminate\Database\Seeder;
 
-class UsersSeeder extends Seeder
+final class TestSeeder extends Seeder
 {
     public function run(): void
     {
         User::factory()
-            ->count(3)
+            ->count(1)
+            ->email('test@test.by')
             ->active()
             ->create();
     }

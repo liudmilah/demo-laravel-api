@@ -9,12 +9,12 @@ services:
             - .:/app
         networks:
             - traefik-public
-            - laravel
+            - todolist
         labels:
             - traefik.enable=true
             - traefik.docker.network=traefik-public
-            - traefik.http.routers.laravel-api.rule=Host(`laravel-api.localhost`)
-            - traefik.http.routers.laravel-api.entryPoints=http
+            - traefik.http.routers.todolist-api.rule=Host(`todolist-api.localhost`)
+            - traefik.http.routers.todolist-api.entryPoints=http
 
     todolist-api-php-fpm:
         build:
@@ -22,7 +22,7 @@ services:
             dockerfile: development/php-fpm/Dockerfile
         restart: always
         networks:
-            - laravel
+            - todolist
         environment:
             APP_ENV: ${APP_ENV}
             APP_DEBUG: ${APP_DEBUG}
@@ -49,7 +49,7 @@ services:
             context: docker
             dockerfile: development/php-cli/Dockerfile
         networks:
-            - laravel
+            - todolist
         environment:
             APP_ENV: ${APP_ENV}
             APP_DEBUG: ${APP_DEBUG}
@@ -82,7 +82,7 @@ services:
             - db-data:/var/lib/mysql
         networks:
             - traefik-public
-            - laravel
+            - todolist
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
@@ -96,7 +96,7 @@ services:
             - redis-data:/data
         networks:
             - traefik-public
-            - laravel
+            - todolist
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
@@ -107,11 +107,11 @@ services:
         restart: always
         networks:
             - traefik-public
-            - laravel
+            - todolist
         labels:
             - traefik.enable=true
             - traefik.docker.network=traefik-public
-            - traefik.http.routers.todolist-api-mailer.rule=Host(`todolist-api-mailer.localhost`)
+            - traefik.http.routers.todolist-api-mailer.rule=Host(`todolist-mailer.localhost`)
             - traefik.http.routers.todolist-api-mailer.entryPoints=http
             - traefik.http.services.todolist-api-mailer.loadBalancer.server.port=8025
 
@@ -131,12 +131,12 @@ services:
         depends_on:
             - todolist-api-redis
         networks:
-            - laravel
+            - todolist
 
 networks:
     traefik-public:
         external: true
-    laravel:
+    todolist:
 
 volumes:
     db-data:

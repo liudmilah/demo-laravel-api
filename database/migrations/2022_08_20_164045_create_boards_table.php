@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('boards', function (Blueprint $table) {
             $table->string('id', 36);
             $table->primary('id');
-            $table->string('name', 100);
-            $table->string('user_id', 36);
+            $table->string('name', 100)->nullable(false);
+            $table->string('user_id', 36)->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();
         });

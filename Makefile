@@ -23,7 +23,7 @@ api-clear:
 	docker run --rm -v ${PWD}:/app -w /app alpine sh -c 'rm -rf storage/logs/* bootstrap/cache/* storage/framework/cache/* storage/framework/testing/* storage/framework/sessions/* storage/framework/views/*'
 
 api-permissions:
-	docker run --rm -v ${PWD}:/app -w /app alpine chmod -R 777 storage/framework storage/logs bootstrap/cache
+	docker run --rm -v ${PWD}:/app -w /app alpine chown -R ${USER}:www-data storage && chown -R ${USER}:www-data bootstrap/cache && chmod -R 775 storage bootstrap/cache
 
 api-composer-install:
 	docker-compose run --rm todolist-api-php-cli composer install
