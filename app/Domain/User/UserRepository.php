@@ -20,4 +20,11 @@ final class UserRepository extends BaseRepository
             ->where('status', Status::WAIT->value)
             ->first();
     }
+
+    public function findOneActiveByEmail(string $email): ?User
+    {
+        return User::where('email', $email)
+            ->where('status', Status::ACTIVE->value)
+            ->first();
+    }
 }

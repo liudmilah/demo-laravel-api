@@ -23,7 +23,8 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property Status $status
  * @property string $passwordHash
  */
-final class User extends BaseModel implements \Illuminate\Contracts\Auth\MustVerifyEmail
+final class User extends BaseModel
+    implements \Illuminate\Contracts\Auth\MustVerifyEmail, \Illuminate\Contracts\Auth\Authenticatable
 {
     use HasApiTokens, Notifiable, HasFactory, Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;
 

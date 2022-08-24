@@ -23,9 +23,9 @@ class CreateBoardTest extends ApiTestCase
     }
 
     /**
-     * @dataProvider errorRequests
+     * @dataProvider validationErrors
      */
-    public function testFailedValidation(array $payload, string $errorMessage)
+    public function testValidationErrors(array $payload, string $errorMessage)
     {
         $response = $this->post(self::URI, $payload);
 
@@ -45,7 +45,7 @@ class CreateBoardTest extends ApiTestCase
         $response->assertStatus(401);
     }
 
-    public function errorRequests(): array
+    public function validationErrors(): array
     {
         return [
             'missing name' => [

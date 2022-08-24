@@ -30,9 +30,9 @@ final class SignupRequestTest extends ApiTestCase
     }
 
     /**
-     * @dataProvider errorRequests
+     * @dataProvider validationErrors
      */
-    public function testFailedValidation(array $payload, string $errorMessage)
+    public function testValidationErrors(array $payload, string $errorMessage)
     {
         $response = $this->post(self::URI, $payload);
 
@@ -40,7 +40,7 @@ final class SignupRequestTest extends ApiTestCase
             ->assertJsonFragment(['message' => $errorMessage]);
     }
 
-    public function errorRequests(): array
+    public function validationErrors(): array
     {
         return [
             'missing password confirmation' => [

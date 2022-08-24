@@ -45,9 +45,9 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [ 'email' => $email ]);
     }
 
-    public function id(Id $id): UserFactory
+    public function id(string $id): UserFactory
     {
-        return $this->state(fn (array $attributes) => [ 'id' => $id ]);
+        return $this->state(fn (array $attributes) => [ 'id' => new Id($id) ]);
 
     }
 }

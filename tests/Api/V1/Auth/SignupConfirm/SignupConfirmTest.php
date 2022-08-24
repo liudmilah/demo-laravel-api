@@ -14,21 +14,21 @@ final class SignupConfirmTest extends ApiTestCase
     public function testSuccess()
     {
         $response = $this->get(
-            $this->getVerificationLink(TestSeeder::WAIT_USER_ID)
+            $this->getVerificationLink(TestSeeder::WAITING_USER_ID)
         );
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['token']);
+            ->assertSeeText('');
     }
 
     public function testConfirmTwice()
     {
-        $uri = $this->getVerificationLink(TestSeeder::WAIT_USER_ID);
+        $uri = $this->getVerificationLink(TestSeeder::WAITING_USER_ID);
 
         $response = $this->get($uri);
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['token']);
+            ->assertSeeText('');
 
         $response = $this->get($uri);
 

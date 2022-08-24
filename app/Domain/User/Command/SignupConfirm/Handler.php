@@ -12,11 +12,8 @@ final class Handler
 
     /**
      * todo improve
-     *
-     * @param Command $command
-     * @return User
      */
-    public function handle(Command $command): User
+    public function handle(Command $command)
     {
         $user = $this->assertUserExists($command->userId);
         $this->assertTokenValid($command->hash, $user);
@@ -26,8 +23,6 @@ final class Handler
         $user->markEmailAsVerified();
 
         $this->users->update($user);
-
-        return $user;
     }
 
     private function assertUserExists($userId): User
