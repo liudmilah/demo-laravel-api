@@ -12,10 +12,7 @@ final class LoginTest extends ApiTestCase
 
     public function testSuccess()
     {
-        $response = $this->post(
-            self::URI,
-            $this->getPayload()
-        );
+        $response = $this->post(self::URI, $this->getPayload());
 
         $response->assertStatus(200)
             ->assertJsonStructure(['token']);

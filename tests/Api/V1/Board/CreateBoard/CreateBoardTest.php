@@ -5,18 +5,15 @@ namespace Tests\Api\V1\Board\CreateBoard;
 use Tests\ApiTestCase;
 use Tests\Helper;
 
-// todo fix tests after authentication
-
 class CreateBoardTest extends ApiTestCase
 {
     private const URI = '/api/v1/board';
 
     public function testSuccess()
     {
-        $response = $this->post(
-            self::URI,
-            $this->getPayload()
-        );
+        $this->authorize(TestSeeder::USER_ID);
+
+        $response = $this->post(self::URI, $this->getPayload());
 
         $response->assertStatus(201)
             ->assertJsonStructure(['id']);
@@ -27,6 +24,8 @@ class CreateBoardTest extends ApiTestCase
      */
     public function testValidationErrors(array $payload, string $errorMessage)
     {
+        $this->authorize(TestSeeder::USER_ID);
+
         $response = $this->post(self::URI, $payload);
 
         $response->assertStatus(422)
@@ -35,12 +34,7 @@ class CreateBoardTest extends ApiTestCase
 
     public function testGuest()
     {
-        $this->markTestIncomplete();
-
-        $response = $this->post(
-            self::URI,
-            $this->getPayload()
-        );
+        $response = $this->post(self::URI, $this->getPayload());
 
         $response->assertStatus(401);
     }

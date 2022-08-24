@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Api\V1\Board\CreateBoard;
+namespace Tests\Api\V1\Auth\Logout;
 
 use App\Domain\User\User;
 use Illuminate\Database\Seeder;

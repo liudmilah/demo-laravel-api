@@ -3,7 +3,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Domain\Id;
+use App\Domain\User\User;
+use App\Domain\User\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 
 abstract class ApiTestCase extends TestCase
 {
@@ -34,6 +38,19 @@ abstract class ApiTestCase extends TestCase
         }
 
         return $this->payload;
+    }
+
+    protected function authorize(string $userId): void
+    {
+        Sanctum::actingAs($this->getUser($userId), ['*']);
+    }
+
+    protected function getUser(string $id): User
+    {
+        $users = $this->app->make(UserRepository::class);
+
+        /** @var User $user */
+        return $users->findOneById(new Id($id));
     }
 
     private function getRunningTestDir(): string

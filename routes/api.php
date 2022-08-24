@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\{
     Auth\SignupRequest,
     Auth\SignupConfirm,
     Auth\Login,
+    Auth\Logout,
 
     Board\CreateBoard,
 
@@ -19,14 +20,15 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/signup/confirm/{id}/{hash}', SignupConfirm::class)->name('verification.verify');
     Route::post('/auth/login', Login::class);
 
-    Route::post('/board', CreateBoard::class);
-
     Route::middleware(['auth:sanctum'])->group(function () {
+
+        Route::get('/auth/logout', Logout::class);
 
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
 
+        Route::post('/board', CreateBoard::class);
     });
 });
 
