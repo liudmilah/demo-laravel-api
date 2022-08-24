@@ -17,7 +17,7 @@ final class Handler
 
     public function handle(Command $command): void
     {
-        $this->assertUserDontExist($command->email);
+        $this->assertUserDoesntExist($command->email);
 
         $user = User::signup(
             Id::generate(),
@@ -34,7 +34,7 @@ final class Handler
         $this->dispatcher->dispatch(new UserRegistered($user));
     }
 
-    private function assertUserDontExist(string $email)
+    private function assertUserDoesntExist(string $email)
     {
         if ($this->users->findOneByEmail($email) !== null) {
             Log::warning('Signup request: user exists with this email: ' . $email);
