@@ -25,7 +25,8 @@ final class LoginTest extends ApiTestCase
             Helper::replace($this->getPayload(), ['email' => TestSeeder::WAITING_USER_EMAIL]),
         );
 
-        $response->assertStatus(500);
+        $response->assertStatus(409)
+            ->assertJsonFragment(['message' => 'Invalid request data.']);
     }
 
     /**
@@ -46,7 +47,8 @@ final class LoginTest extends ApiTestCase
     {
         $response = $this->post(self::URI, $payload);
 
-        $response->assertStatus(500);
+        $response->assertStatus(409)
+            ->assertJsonFragment(['message' => 'Invalid request data.']);
     }
 
     public function validationErrors(): array

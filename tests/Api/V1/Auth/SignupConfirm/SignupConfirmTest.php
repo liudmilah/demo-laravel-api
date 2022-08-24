@@ -27,7 +27,8 @@ final class SignupConfirmTest extends ApiTestCase
 
         $response = $this->get($uri);
 
-        $response->assertStatus(500);
+        $response->assertStatus(409)
+            ->assertJsonFragment(['message' => 'Invalid request data.']);
     }
 
     public function testConfirmNonExistentUser()
