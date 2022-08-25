@@ -43,10 +43,12 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable(function (\DomainException $e) {
-            return response()
-                ->json(['message' => $e->getMessage()])
-                ->setStatusCode(409);
-        });
+        $this->renderable(
+            fn (\DomainException $e) => response()->json(['message' => $e->getMessage()])->setStatusCode(409)
+        );
+
+        $this->renderable(
+            fn (ItemNotFoundException $e) => response('Not found.', 404)
+        );
     }
 }

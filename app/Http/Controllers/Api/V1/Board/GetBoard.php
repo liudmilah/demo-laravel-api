@@ -16,10 +16,6 @@ class GetBoard extends Controller
 
         $board = $boards->fetch($query);
 
-        if (!$board) {
-            abort(404);
-        }
-
         return [
             'id' => $board->id,
             'name' => $board->name,
