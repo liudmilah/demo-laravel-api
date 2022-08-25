@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Board;
 
+use App\Domain\Board\Board;
 use App\Domain\Board\Command\Create\Command;
 use App\Domain\Board\Command\Create\Handler;
 use App\Http\Controllers\Controller;
@@ -40,14 +41,12 @@ class CreateBoard extends Controller
     public function __invoke(Request $request, Handler $handler): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'bail|required|max:100'
+            'name' => ['bail', 'required', 'max:'.Board::NAME_LENGTH],
         ]);
 
         $validator->validate();
 
-        $user = \App\Domain\User\User::all()->first();
-
-        $command = new Command($request->input('name'), $user);
+        $command = new Command($request->input('name'), $request->user());
 
         $boardId = $handler->handle($command);
 

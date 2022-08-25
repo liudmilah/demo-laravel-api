@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\V1\{
     Auth\Logout,
 
     Board\CreateBoard,
+    Board\UpdateBoard,
+    Board\GetBoard,
 
     Home,
 };
@@ -29,6 +31,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::post('/board', CreateBoard::class);
+        Route::put('/board/{id}', UpdateBoard::class);
+        Route::get('/board/{id}', GetBoard::class);
     });
 });
 

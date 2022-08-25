@@ -6,6 +6,7 @@ namespace App\Domain\Board;
 use App\Domain\BaseModel;
 use App\Domain\Id;
 use App\Domain\User\User;
+use Database\Factories\BoardFactory;
 
 /**
  * @property Id $id
@@ -14,6 +15,7 @@ use App\Domain\User\User;
  */
 final class Board extends BaseModel
 {
+    public const NAME_LENGTH = 100;
     /**
      * @var string
      */
@@ -26,5 +28,10 @@ final class Board extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function newFactory()
+    {
+        return BoardFactory::new();
     }
 }

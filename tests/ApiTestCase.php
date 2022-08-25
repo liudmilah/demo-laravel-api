@@ -13,7 +13,6 @@ abstract class ApiTestCase extends TestCase
 {
     use RefreshDatabase;
 
-    protected string $baseUri = '/api/v1';
     protected ?array $payload = null;
     protected ?bool $hasSeeder = null;
 
@@ -51,6 +50,11 @@ abstract class ApiTestCase extends TestCase
 
         /** @var User $user */
         return $users->findOneById(new Id($id));
+    }
+
+    protected function buildUrl(string $url, ...$params): string
+    {
+        return sprintf($url, ...$params);
     }
 
     private function getRunningTestDir(): string

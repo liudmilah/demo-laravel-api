@@ -24,20 +24,12 @@ class UserFactory extends Factory
 
     public function active(): UserFactory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'status' => Status::ACTIVE,
-            ];
-        });
+        return $this->state(fn (array $attributes) => [ 'status' => Status::ACTIVE ]);
     }
 
     public function wait(): UserFactory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'status' => Status::WAIT,
-            ];
-        });
+        return $this->state(fn (array $attributes) => [ 'status' => Status::WAIT ]);
     }
 
     public function email(string $email): UserFactory
@@ -48,6 +40,5 @@ class UserFactory extends Factory
     public function id(string $id): UserFactory
     {
         return $this->state(fn (array $attributes) => [ 'id' => new Id($id) ]);
-
     }
 }
