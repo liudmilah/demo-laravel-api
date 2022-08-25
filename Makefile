@@ -41,7 +41,7 @@ api-migrations-rollback:
 	docker-compose run --rm todolist-api-php-cli composer artisan migrate:rollback
 
 api-new-migration:
-	docker-compose run --rm todolist-api-php-cli composer artisan make:migration $(p)
+	docker-compose run --rm todolist-api-php-cli composer artisan make:migration $(name)
 
 api-generate-app-key:
 	docker-compose run --rm todolist-api-php-cli composer artisan key:generate
