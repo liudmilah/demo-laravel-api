@@ -6,7 +6,7 @@ use Tests\ApiTestCase;
 
 class GetBoardTest extends ApiTestCase
 {
-    private const URI = '/api/v1/board/%s';
+    private const URI = '/api/v1/boards/%s';
 
     public function testSuccess()
     {
@@ -38,7 +38,7 @@ class GetBoardTest extends ApiTestCase
 
     public function testGuest()
     {
-        $response = $this->put(self::URI, $this->getPayload());
+        $response = $this->get($this->buildUrl(self::URI, TestSeeder::BOARD_ID));
 
         $response->assertStatus(401);
     }

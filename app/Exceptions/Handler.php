@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
         );
 
         $this->renderable(
-            fn (ItemNotFoundException $e) => response('Not found.', 404)
+            fn (ItemNotFoundException $e) => response(['message' => $e->getMessage()], 404)
         );
     }
 }

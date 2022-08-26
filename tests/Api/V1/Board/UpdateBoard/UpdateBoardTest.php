@@ -7,8 +7,8 @@ use Tests\Helper;
 
 class UpdateBoardTest extends ApiTestCase
 {
-    private const URI = '/api/v1/board/%s';
-    private const GET_URI = '/api/v1/board/%s';
+    private const URI = '/api/v1/boards/%s';
+    private const GET_URI = '/api/v1/boards/%s';
 
     public function testSuccess()
     {

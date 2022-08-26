@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Domain\Card\Card;
 use App\Domain\Id;
-use App\Domain\Board\BoardList;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CardFactory extends Factory
 {
-    protected $model = BoardList::class;
+    protected $model = Card::class;
 
     public function definition(): array
     {
@@ -20,18 +20,23 @@ class CardFactory extends Factory
         ];
     }
 
-    public function id(string $id): BoardListFactory
+    public function id(string $id): CardFactory
     {
         return $this->state(fn (array $attributes) => [ 'id' => new Id($id) ]);
     }
 
-    public function name(string $name): BoardListFactory
+    public function name(string $name): CardFactory
     {
         return $this->state(fn (array $attributes) => [ 'name' => $name ]);
     }
 
-    public function sequenceNumber(int $sequence): BoardListFactory
+    public function sequenceNumber(int $sequence): CardFactory
     {
         return $this->state(fn (array $attributes) => [ 'sequence' => $sequence ]);
+    }
+
+    public function description(string $description): CardFactory
+    {
+        return $this->state(fn (array $attributes) => [ 'description' => $description ]);
     }
 }

@@ -131,7 +131,7 @@
                 "tags": [
                     "Board"
                 ],
-                "summary": "Add a new board",
+                "summary": "Adds a new board",
                 "requestBody": {
                     "content": {
                         "application/json": {

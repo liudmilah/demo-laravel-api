@@ -80,6 +80,8 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
         volumes:
             - db-data:/var/lib/mysql
+        ports:
+            - "3309:3306"
         networks:
             - traefik-public
             - todolist

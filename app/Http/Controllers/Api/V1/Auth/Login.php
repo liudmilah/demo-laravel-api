@@ -9,34 +9,41 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Post(
- *     path="/api/v1/auth/login",
- *     tags={"Auth"},
- *     summary="Login user",
- *     @OA\RequestBody(
- *         @OA\JsonContent(
- *             @OA\Property(property="email", type="string"),
- *             @OA\Property(property="password", type="string"),
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Success",
- *         @OA\JsonContent(
- *              @OA\Property(property="token", type="string")
- *         )
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Validation error",
- *         @OA\JsonContent(
- *              @OA\Property(property="message", type="string")
- *         )
- *     )
- * )
- */
+#[OA\Post(
+    path: '/api/v1/auth/login',
+    summary: 'Login user',
+    requestBody: new OA\RequestBody(
+        content: new OA\JsonContent(
+            properties: [
+                new OA\Property(property: 'email', type: 'string'),
+                new OA\Property(property: 'password', type: 'string'),
+            ]
+        )
+    ),
+    tags: ['Auth'],
+    responses: [
+        new OA\Response(
+            response: '200',
+            description: 'Success',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'token', type: 'string')
+                ]
+            )
+        ),
+        new OA\Response(
+            response: '422',
+            description: 'Validation error',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'message', type: 'string')
+                ]
+            )
+        ),
+    ]
+)]
 final class Login extends \App\Http\Controllers\Controller
 {
     public function __invoke(Request $request, Handler $handler, Response $response): JsonResponse

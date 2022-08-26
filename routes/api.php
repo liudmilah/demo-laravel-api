@@ -13,6 +13,17 @@ use App\Http\Controllers\Api\V1\{
     Board\GetBoard,
     Board\DeleteBoard,
 
+    BoardList\GetList,
+    BoardList\GetLists,
+    BoardList\CreateList,
+    BoardList\UpdateList,
+    BoardList\DeleteList,
+
+    Card\GetCards,
+    Card\CreateCard,
+    Card\UpdateCard,
+    Card\DeleteCard,
+
     Home,
 };
 
@@ -31,10 +42,21 @@ Route::prefix('v1')->group(function () {
             return $request->user();
         });
 
-        Route::post('/board', CreateBoard::class);
-        Route::put('/board/{id}', UpdateBoard::class);
-        Route::get('/board/{id}', GetBoard::class);
-        Route::delete('/board/{id}', DeleteBoard::class);
+        Route::post('/boards', CreateBoard::class);
+        Route::put('/boards/{id}', UpdateBoard::class);
+        Route::get('/boards/{id}', GetBoard::class);
+        Route::delete('/boards/{id}', DeleteBoard::class);
+
+        Route::get('/lists', GetLists::class);
+        Route::post('/lists', CreateList::class);
+        Route::put('/lists/{id}', UpdateList::class);
+        Route::get('/lists/{id}', GetList::class);
+        Route::delete('/lists/{id}', DeleteList::class);
+
+        Route::get('/cards', GetCards::class);
+        Route::post('/cards', CreateCard::class);
+        Route::put('/cards/{id}', UpdateCard::class);
+        Route::delete('/cards/{id}', DeleteCard::class);
     });
 });
 

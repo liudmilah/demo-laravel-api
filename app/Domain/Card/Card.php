@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Board;
+namespace App\Domain\Card;
 
 use App\Domain\BaseModel;
+use App\Domain\BoardList\BoardList;
 use App\Domain\Id;
 use Database\Factories\CardFactory;
 
@@ -17,14 +18,20 @@ use Database\Factories\CardFactory;
  */
 final class Card extends BaseModel
 {
+    public const NAME_LENGTH = 100;
+    public const DESCR_LENGTH = 10000;
     /**
      * @var string
      */
     protected $table = 'cards';
 
+    protected $fillable = [
+        'id', 'name', 'description', 'sequence', 'list_id',
+    ];
+
     public function list()
     {
-        return $this->belongsTo(BoardList::class);
+        return $this->belongsTo(BoardList::class, 'list_id', 'id');
     }
 
     public function label()

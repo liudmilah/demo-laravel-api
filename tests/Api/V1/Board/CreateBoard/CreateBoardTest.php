@@ -7,7 +7,7 @@ use Tests\Helper;
 
 class CreateBoardTest extends ApiTestCase
 {
-    private const URI = '/api/v1/board';
+    private const URI = '/api/v1/boards';
 
     public function testSuccess()
     {

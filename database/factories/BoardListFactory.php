@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Domain\BoardList\BoardList;
 use App\Domain\Id;
-use App\Domain\Board\BoardList;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BoardListFactory extends Factory

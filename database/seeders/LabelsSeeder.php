@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Domain\Board\Label;
+use App\Domain\Card\Label;
 use Illuminate\Database\Seeder;
 
 class LabelsSeeder extends Seeder

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Domain\Card\Label;
 use App\Domain\Id;
-use App\Domain\Board\Label;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LabelFactory extends Factory

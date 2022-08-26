@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Board;
+namespace App\Domain\Card;
 
 use App\Domain\BaseModel;
 use App\Domain\Id;

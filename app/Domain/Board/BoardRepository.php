@@ -17,6 +17,13 @@ final class BoardRepository extends BaseRepository
             ->first();
     }
 
+    public function hasByIdAndUser(Id $boardId, Id $userId): bool
+    {
+        return Board::where('id', $boardId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
     public function hasByName(string $name, Id $userId): bool
     {
         return Board::where('name', $name)
